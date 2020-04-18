@@ -4,3 +4,5 @@ The following python code is the first step to creating an open source tool whic
 Note: In order for the code to run download the shape_predictor_68_face_landmarks.dat file from here https://github.com/AKSHAYUBHAT/TensorFace/blob/master/openface/models/dlib/ and place it in the same folder with main.py and the rest of the scripts. Make sure the name is exactly 'shape_predictor_68_face_landmarks.dat'.
 
 Simply open main.py and run it to for an example result. Make sure you are connected to the internet. You will need ffmpeg and youtube-dl installed.
+
+For a realtime demo of face detection and cropping open DEMO_face_detect.py, uncomment some example code in the file and run it.
