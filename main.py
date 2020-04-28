@@ -1,10 +1,7 @@
 ''' Every type you encounter ##EDIT_ME## you will need to adjust these settings '''
-''' Here we download and process youtube videos in a format in which ML algorithms can be trained.'''
-''' Tested on Ubuntu 19.4 and python 3.7.7'''
 import pandas as pd
 import numpy as np
 import module_youtube_extract
-#import module_compare_subtitles
 import module_convert_audio_to_wav
 import module_process_subtitles
 import module_save_variables
@@ -13,17 +10,38 @@ import module_sample_name
 import module_face_detection
 
 
-
 ##EDIT_ME##
 #---
-# tested and it works
-#INPUT_URL='https://www.youtube.com/watch?v=6cXdS_qVfUc'
+# tested and work wihtought any changes to the code
+#INPUT_URL = 'https://www.youtube.com/watch?v=6cXdS_qVfUc'
+#INPUT_URL = 'https://www.youtube.com/watch?v=v2Q3eoUldcE'
+INPUT_URL = 'https://www.youtube.com/watch?v=kayOhGRcNt4'
+#INPUT_URL = 'https://www.youtube.com/watch?v=YHCZt8LeQzI&fbclid=IwAR2e436VcxEBWWnnz48W2vPU4iTfFpxgglA9U7uIOFP1XCA1sdp4h_qnmLI'
+#INPUT_URL = 'https://www.youtube.com/watch?v=a1Kxhhmqt8U'
+#INPUT_URL = 'https://www.youtube.com/watch?v=dRFbwjwQ4VE'
+#INPUT_URL = 'https://www.youtube.com/watch?v=PpV_5-tCS-c'
+#INPUT_URL = 'https://www.youtube.com/watch?v=DhYeqgufYss'
+#INPUT_URL = 'https://www.youtube.com/watch?v=HqI0jbKGaT8&pbjreload=10'
+#INPUT_URL = 'https://www.youtube.com/watch?v=kR-WCDa4NSc'
+#INPUT_URL = 'https://www.youtube.com/watch?v=PjQ-AfRNG18'
+#INPUT_URL = 'https://www.youtube.com/watch?v=PACH0XKozuU'
+#INPUT_URL = 'https://www.youtube.com/watch?v=ie6lRKAdvuY'
+#INPUT_URL = 'https://www.youtube.com/watch?v=w2PQEzDawMw'
+#INPUT_URL = 'https://www.youtube.com/watch?v=5v-wyR5emRw'
+#INPUT_URL = 'https://www.youtube.com/watch?v=MmFuWmzeiDs'
+#INPUT_URL = 'https://www.youtube.com/watch?v=3obig1XeOlw'
+#INPUT_URL = 'https://www.youtube.com/watch?v=Xdzo2dVqNH0'
+#INPUT_URL = 'https://www.youtube.com/watch?v=m8ZUvBeKZEY'
+#INPUT_URL = 'https://www.youtube.com/watch?v=uiU5GutVms4'
 
-# tested and it works
-#INPUT_URL= 'https://www.youtube.com/watch?v=v2Q3eoUldcE'
 
-# tested and it works
-INPUT_URL= 'https://www.youtube.com/watch?v=kayOhGRcNt4'
+# settings or the code need editting
+##INPUT_URL = 'https://www.youtube.com/watch?v=ZTK8XJUXqy8'
+##INPUT_URL = 'https://www.youtube.com/watch?v=1mHjMNZZvFo'
+##INPUT_URL = 'https://www.youtube.com/watch?v=ZO44B271tfk'
+##INPUT_URL= 'https://www.youtube.com/watch?v=z0hrMg1j_d4'
+##INPUT_URL= 'https://www.youtube.com/watch?v=aeT3YOYsvMs'
+
 
 
 #---
@@ -45,11 +63,40 @@ random_string_INPUT = str(module_sample_name.passw_gen(MODE=0, LENGTH=3))
 #FOLDER_PATH = str('a')
 FOLDER_PATH = module_sample_name.folder_gen(RANDOM_STRING = random_string_INPUT, FILE_PERMISION = '777')
 
+
 ##EDIT_ME##
-# avoid special characters appart from _ and remember to add / before the name
+# avoid special characters appart from _ and remember to add / before the actual name
+# Work fine
 #NNAME = '/Donald Trump suspends US travel from 26 European countries but not the UK to fight coronavirus'
 #NNAME = '/Moving to the UK to study Finnish Girls Experience'
 NNAME = '/Tell Me About Yourself - A Good Answer to This Interview Question'
+#NNAME = '/CYPRUS the IRELAND of the MEDITERRANEAN VisualPolitik EN'
+#NNAME = '/Race to become UK PM Boris Johnson exclusive interview BBC News'
+#NNAME = '/Coronavirus V Last Week Tonight with John Oliver'
+#NNAME = '/Trump Attacks the WHO Kellyanne Cant Count to COVID 19 The Daily Social Distancing Show'
+#NNAME = '/VPNs or Virtual Private Networks as Fast As Possible'
+#NNAME = '/John McAfee and the FBI Finally Face Off On CNN CNN Interview' 
+#NNAME = '/McAfee to CIA You Should Be Ashamed What Were You Thinking' # failed due to youtube-dl
+#NNAME = '/John McAfee Im Behind Edward Snowden'
+#NNAME = '/Edward Snowden I know how to keep a secret BBC News'
+#NNAME = '/Coronavirus: Bill Gates interview '
+#NNAME = '/Atlanta mayor Im at a loss by governors decision to reopen' # works simply there are no subtitles for this particular video
+#NNAME = '/Tell Me About Yourself A Good Answer To This Interview Question'
+#NNAME = '/How to Answer Tell Me About Yourself'
+#NNAME = '/Ken Jeong Answers More Medical Questions From Twitter Tech Support WIRED'
+#NNAME = '/body hair tips from a ballerina'
+#NNAME = '/CompTIA IT Fundamentals FC0-U61 Exam Prep Intro Free Course from ITProTV'
+#NNAME = '/How To Pass CompTIA Exams'
+
+
+# settings or the code need editting 
+##NNAME = '/FACEBOOK BANS CORONAVIRUS PROTESTS'
+##NNAME  = '/08 common Interview question and answers Job Interview Skills'
+##NNAME = '/Pence on the federal roadmap to restart the economy'
+##NNAME = '/Give Donald Trump A Radio Briefings'
+##NNAME = '/Trump Blames WHO and Rushes to Open Up America Again A Closer Look'
+
+
 
 #  remove any spaces if they exists in the path as that may introduce errors. Note_if there are space0 or in the absolute directory path, this might introduce errors.
 NNAME = NNAME.replace(' ', '_')
@@ -57,10 +104,9 @@ NNAME = NNAME.replace(' ', '_')
 INPUT_FILE_NAME=str(FOLDER_PATH) + NNAME
 
 
-
 #0
 # get a video meta data
-meta_data = module_youtube_extract.meta_data(URL = INPUT_URL, FILE_NAME = INPUT_FILE_NAME , TXT_CLEAN=True, TXT=True, JSON=True, DOWNLOAD=False)
+#meta_data = module_youtube_extract.meta_data(URL = INPUT_URL, FILE_NAME = INPUT_FILE_NAME , TXT_CLEAN=True, TXT=True, JSON=True, DOWNLOAD=False)
 
 #1
 # get all available downloadble formats
@@ -68,28 +114,35 @@ available_formats = module_youtube_extract.list_available_AV_formats(URL = INPUT
 
 
 
-#2
+#2 # require stable internet connection
 # download audio visual content. Note it has been observed that when some of codes are used even thought they are specified as pure video codes they also contain embeded audio such as code 22. There for an additional function is needed to remove the audio.
 module_youtube_extract.down_audio_video(URL = INPUT_URL, VIDEO_QUALITY_CODE=22, AUDIO_QUALITY_CODE=140 , MERGE=False, FILE_NAME = INPUT_FILE_NAME)
 
 #7
-# Convert m4a into wav file, it is required in order to apply allingment of audio and text
+# Convert m4a into wav file
+# converts anything with the FORMAT_FROM in the given directory to .wav file
+#module_convert_audio_to_wav.dir_conversion_to_wav(FORMAT_FROM='.m4a', DIRECTORY='data/')
+
+# converts simple files OPTINAL
 module_convert_audio_to_wav.file_conversion_to_wav(FORMAT_FROM='.m4a', FILE_NAME=INPUT_FILE_NAME, BIT_RATE='192k')
 
 
 whole_pure_audio_file_name_dir = INPUT_FILE_NAME + '.wav'
 
+
 #8
 #Convert mp4 to mkv format as this elliminates errors in the segmentatio of the videos later on
 video_converted_to_mkv = module_video_processing.convert_from_mp4_to_mkv(FILE_NAME=INPUT_FILE_NAME, INPUT_EXTENSION='.mp4', OUTPUT_EXTENSION = '.mkv')
 
-#9
-# remove the audio from the mp4 file 
 
+#9 OPTIONAL
+# remove the audio from the mp4 file https://unix.stackexchange.com/questions/6402/how-to-remove-an-audio-track-from-an-mp4-video-file
+
+# for single file
 module_video_processing.remove_audio_from_file_mp4(FILE_NAME=INPUT_FILE_NAME, EXTENSION = '.mp4')
 
 
-#10 
+#10 OPTINAL
 #Convert mp4 to mkv format as this elliminates errors in the segmentatio of the videos later on for the none_audio_ video
 video_converted_to_mkv_none_audio = module_video_processing.convert_from_mp4_to_mkv(FILE_NAME=INPUT_FILE_NAME+'_none_audio', INPUT_EXTENSION='.mp4', OUTPUT_EXTENSION = '.mkv')
 
@@ -186,6 +239,7 @@ stop_index_mcpse = 5
 stop_index_mcpsh = 5
 
 
+
 #12
 # Fixed and necessary step
 # get the maximum time of the video
@@ -228,6 +282,7 @@ else:
     
     chopped_sample_per_word_folder_dir_pure_video_acpwe = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_word_folder_dir_acpwe + '/pure_video', FILE_PERMISION = '777')
     
+    #chopped_sample_per_word_folder_dir_combined_acpwe = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_word_folder_dir_acpwe + '/combined', FILE_PERMISION = '777')
 
     
 if (mcpwe == None or mcpwe == [] or mtpwe == None or mtpwe == []):
@@ -262,6 +317,7 @@ else:
     
     chopped_sample_per_word_folder_dir_pure_video_mcpwe = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_word_folder_dir_mcpwe + '/pure_video', FILE_PERMISION = '777') 
 
+    #chopped_sample_per_word_folder_dir_combined_mcpwe = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_word_folder_dir_mcpwe + '/combined', FILE_PERMISION = '777')
 
 if (acpse == None or acpse == [] or atpse == None or atpse == []):
     sentence_chunk_samples_info_acpse = None
@@ -293,6 +349,7 @@ else:
     
     chopped_sample_per_sentence_folder_dir_pure_audio_acpse = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_acpse + '/pure_audio', FILE_PERMISION = '777')
     chopped_sample_per_sentence_folder_dir_pure_video_acpse = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_acpse + '/pure_video', FILE_PERMISION = '777')
+    #chopped_sample_per_word_folder_dir_combined_acpse = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_acpse + '/combined', FILE_PERMISION = '777')
 
 
 
@@ -326,6 +383,8 @@ else:
     
     chopped_sample_per_sentence_folder_dir_pure_audio_acpsh = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_acpsh + '/pure_audio', FILE_PERMISION = '777')
     chopped_sample_per_sentence_folder_dir_pure_video_acpsh = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_acpsh + '/pure_video', FILE_PERMISION = '777')
+    #chopped_sample_per_word_folder_dir_combined_acpsh = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_acpsh + '/combined', FILE_PERMISION = '777')
+
 
 
 
@@ -359,6 +418,7 @@ else:
     
     chopped_sample_per_sentence_folder_dir_pure_audio_mcpse = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_mcpse + '/pure_audio', FILE_PERMISION = '777')
     chopped_sample_per_sentence_folder_dir_pure_video_mcpse = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_mcpse + '/pure_video', FILE_PERMISION = '777')
+    #chopped_sample_per_word_folder_dir_combined_mcpse = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_mcpse + '/combined', FILE_PERMISION = '777')
 
 
 
@@ -392,10 +452,17 @@ else:
     
     chopped_sample_per_sentence_folder_dir_pure_audio_mcpsh = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_mcpsh + '/pure_audio', FILE_PERMISION = '777')
     chopped_sample_per_sentence_folder_dir_pure_video_mcpsh = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_mcpsh + '/pure_video', FILE_PERMISION = '777')
+    #chopped_sample_per_word_folder_dir_combined_mcpsh = module_sample_name.folder_gen(RANDOM_STRING = chopped_sample_per_sentence_folder_dir_mcpsh + '/combined', FILE_PERMISION = '777')
+
+
+
+
+
 
 
 #16
 # make lists which will contain only the file names of each sample. Process file names 
+
 
 
 # new var EXAMPLE
@@ -415,16 +482,23 @@ LLIST_INPUT_SENTENCE_CHUNK_SAMPLES_ACPSH_FILE_NAMES = module_video_processing.ge
 LLIST_INPUT_SENTENCE_CHUNK_SAMPLES_ACPSE_FILE_NAMES = module_video_processing.generate_list_input_sentence_chunk_samples_file_names(SENTENCE_CHUNK_SAMPLES_FILE_NAMES = sentence_chunk_samples_info_acpse)
 
 
+
+
 # new var EXAMPLE
 LIST_OUTPUT_AUDIO_WORD_CHOPPED_ACPWE_NAMES = module_video_processing.generate_list_output_audio_word_chopped_samples_file_names(WORD_CHUNK_SAMPLES_FILE_NAMES = word_chunk_samples_info_acpwe, CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR = chopped_sample_per_word_folder_dir_acpwe, CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR_PURE_AUDIO = chopped_sample_per_word_folder_dir_pure_audio_acpwe, AUDIO_EXTENSION = '.wav')
 
 LIST_OUTPUT_AUDIO_WORD_CHOPPED_MCPWE_NAMES = module_video_processing.generate_list_output_audio_word_chopped_samples_file_names(WORD_CHUNK_SAMPLES_FILE_NAMES = word_chunk_samples_info_mcpwe, CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR = chopped_sample_per_word_folder_dir_mcpwe, CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR_PURE_AUDIO = chopped_sample_per_word_folder_dir_pure_audio_mcpwe, AUDIO_EXTENSION = '.wav')
 
 
+
+
 # new var EXAMPLE
 LIST_OUTPUT_VIDEO_WORD_CHOPPED_ACPWE_NAMES = module_video_processing.generate_list_output_video_word_chopped_samples_file_names(WORD_CHUNK_SAMPLES_FILE_NAMES = word_chunk_samples_info_acpwe , CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR = chopped_sample_per_word_folder_dir_acpwe, CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR_PURE_VIDEO = chopped_sample_per_word_folder_dir_pure_video_acpwe, VIDEO_EXTENSION = '.mkv')
 
 LIST_OUTPUT_VIDEO_WORD_CHOPPED_MCPWE_NAMES = module_video_processing.generate_list_output_video_word_chopped_samples_file_names(WORD_CHUNK_SAMPLES_FILE_NAMES = word_chunk_samples_info_mcpwe , CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR = chopped_sample_per_word_folder_dir_mcpwe, CHOPPED_SAMPLE_PER_WORD_FOLDER_DIR_PURE_VIDEO = chopped_sample_per_word_folder_dir_pure_video_mcpwe, VIDEO_EXTENSION = '.mkv')
+
+
+
 
 
 
@@ -436,6 +510,8 @@ LIST_OUTPUT_AUDIO_SENTENCE_MCPSE_CHOPPED_NAMES = module_video_processing.generat
 LIST_OUTPUT_AUDIO_SENTENCE_ACPSH_CHOPPED_NAMES = module_video_processing.generate_list_output_audio_sentence_chopped_samples_file_names(SENTENCE_CHUNK_SAMPLES_FILE_NAMES = sentence_chunk_samples_info_acpsh, CHOPPED_SAMPLE_PER_SENTENCE_FOLDER_DIR = chopped_sample_per_sentence_folder_dir_acpsh, CHOPPED_SAMPLE_PER_SENTENCE_FOLDER_DIR_PURE_AUDIO = chopped_sample_per_sentence_folder_dir_pure_audio_acpsh, AUDIO_EXTENSION = '.wav')
 
 LIST_OUTPUT_AUDIO_SENTENCE_ACPSE_CHOPPED_NAMES = module_video_processing.generate_list_output_audio_sentence_chopped_samples_file_names(SENTENCE_CHUNK_SAMPLES_FILE_NAMES = sentence_chunk_samples_info_acpse, CHOPPED_SAMPLE_PER_SENTENCE_FOLDER_DIR = chopped_sample_per_sentence_folder_dir_acpse, CHOPPED_SAMPLE_PER_SENTENCE_FOLDER_DIR_PURE_AUDIO = chopped_sample_per_sentence_folder_dir_pure_audio_acpse, AUDIO_EXTENSION = '.wav')
+
+
 
 
 # new var EXAMPLE
@@ -453,6 +529,8 @@ LIST_OUTPUT_VIDEO_SENTENCE_MCPSE_CHOPPED_NAMES = module_video_processing.generat
 
 #17
 # extract the audio from the chopped samples and recreate new files which will contain only the audio and save them in the folders pure_audio
+# for single file
+# module_video_processing.extract_audio_from_single_mkv_files(INPUT_FILE_NAME, OUTPUT_FILE_NAME, BIT_RATE = '192000')
 # for multiple files per word
 module_video_processing.extract_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST_INPUT_WORD_CHUNK_SAMPLES_ACPWE_FILE_NAMES, OUTPUT_FILE_NAME = LIST_OUTPUT_AUDIO_WORD_CHOPPED_ACPWE_NAMES, BIT_RATE = '192000')
 module_video_processing.extract_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST_INPUT_WORD_CHUNK_SAMPLES_MCPWE_FILE_NAMES, OUTPUT_FILE_NAME = LIST_OUTPUT_AUDIO_WORD_CHOPPED_MCPWE_NAMES, BIT_RATE = '192000')
@@ -469,11 +547,14 @@ module_video_processing.extract_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIS
 
 #18
 # remove copy the chopped samples but withought the audio and save them pure_video folders
-
+# for single file
+#module_video_processing.remove_audio_from_mkv_file(INPUT_FILE_NAME, OUTPUT_FILE_NAME)
+# for multiple files per word
+#module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = list_input_word_chunk_samples_file_names, OUTPUT_FILE_NAME = list_output_video_word_chopped_names)
 module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST_INPUT_WORD_CHUNK_SAMPLES_ACPWE_FILE_NAMES, OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_ACPWE_NAMES)
 module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST_INPUT_WORD_CHUNK_SAMPLES_MCPWE_FILE_NAMES, OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_MCPWE_NAMES)
 # for multiple files per sentence
-
+#module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = list_input_sentence_chunk_samples_file_names, OUTPUT_FILE_NAME = list_output_video_sentence_chopped_names)
 module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST_INPUT_SENTENCE_CHUNK_SAMPLES_MCPSH_FILE_NAMES, OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSH_CHOPPED_NAMES)
 
 module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST_INPUT_SENTENCE_CHUNK_SAMPLES_MCPSE_FILE_NAMES, OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSE_CHOPPED_NAMES)
@@ -491,27 +572,26 @@ module_video_processing.remove_audio_from_list_mkv_files(INPUT_FILE_NAME = LLIST
 #> 0 for flipping around the y-axis (horizontal flipping);
 #< 0 for flipping around both axe FLIP == True, FLIP_ARGUMENT =1
 
-#example
-#pure_video_cropped_word_chunk_samples_info = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = list_output_video_word_chopped_names, LIST_OF_INPUT_FILE_NAME = list_output_video_word_chopped_names, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
+
+#acpwe
+pure_video_cropped_word_chunk_samples_info_acpwe = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_ACPWE_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_ACPWE_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68) 
+
+#mcpwe
+pure_video_cropped_word_chunk_samples_info_mcpwe = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_MCPWE_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_MCPWE_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1,  SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68) 
 
 
-pure_video_cropped_word_chunk_samples_info_acpwe = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_ACPWE_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_ACPWE_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
+# mcpsh
+pure_video_cropped_sentence_chunk_samples_info_mcpsh = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSH_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSH_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68) 
 
+#acpse
+pure_video_cropped_sentence_chunk_samples_info_acpse = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSE_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSE_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68) 
 
-pure_video_cropped_word_chunk_samples_info_mcpwe = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_MCPWE_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_WORD_CHOPPED_MCPWE_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
+#acpsh
+pure_video_cropped_sentence_chunk_samples_info_acpsh = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSH_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSH_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68) 
 
+# mcpse
+pure_video_cropped_sentence_chunk_samples_info_mcpse = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSE_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSE_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68) 
 
-pure_video_cropped_sentence_chunk_samples_info_mcpsh = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSH_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSH_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
-
-pure_video_cropped_sentence_chunk_samples_info_acpse = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSE_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSE_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
-
-
-pure_video_cropped_sentence_chunk_samples_info_acpsh = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSH_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_ACPSH_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
-
-pure_video_cropped_sentence_chunk_samples_info_mcpse = module_face_detection.multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSE_CHOPPED_NAMES, LIST_OF_INPUT_FILE_NAME = LIST_OUTPUT_VIDEO_SENTENCE_MCPSE_CHOPPED_NAMES, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = False, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68) 
-
-# # other settings
-# #sentence_chunk_samples_info = module_video_processing.chop_video_per_word_or_sentence(LIST_PER_WORD = acpsh, TIMES_PER_WORD = atpsh, MAX_TIME = max_time, FILE_NAME = INPUT_FILE_NAME,  CHOPPED_SAMPLE_FOLDER_DIR = chopped_sample_per_sentence_folder_dir, SAVE_FILE_NAME = chopped_sample_per_sentence_folder_dir + '/sentence_chunk_samples_info.csv', SHIFT_RIGHT_OR_LEFT = 0, EXTEND_LEFT = -0, EXTEND_RIGHT = 0, EXTENSION = '.mkv', START_INDEX = 0, STOP_INDEX = 'END', SAVE = True)
 
 
 
@@ -519,7 +599,7 @@ pure_video_cropped_sentence_chunk_samples_info_mcpse = module_face_detection.mul
 # example of how to load a json file
 # import json
 # # load jason file example
-# filename = '/media/god/9c72f9bb-20f1-4b7b-8a9e-01f045898c0e/god/LEARNING/UniSheff/Mech/4/FYP/fyp-code/useful_bit/important_files/W/Moving_to_the_UK_to_study_Finnish_Girls_Experience_atpse.json'
+# filename = '/absolute directory.json'
 # with open(filename, 'r') as f:
 #         atpse = json.load(f)
 '''
@@ -532,6 +612,9 @@ pure_video_cropped_sentence_chunk_samples_file_dir_acpse = pure_video_cropped_se
 pure_video_cropped_sentence_chunk_samples_file_dir_acpsh = pure_video_cropped_sentence_chunk_samples_info_acpsh['LIST_CROPPED_VIDEO_FILENAME']
 pure_video_cropped_sentence_chunk_samples_file_dir_mcpse = pure_video_cropped_sentence_chunk_samples_info_mcpse['LIST_CROPPED_VIDEO_FILENAME']
 pure_video_cropped_sentence_chunk_samples_file_dir_mcpsh = pure_video_cropped_sentence_chunk_samples_info_mcpsh['LIST_CROPPED_VIDEO_FILENAME']
+
+
+
 
 
 
@@ -550,9 +633,15 @@ chopped_cropped_pure_video_files_name_dir = {'pure_video_cropped_word_chunk_samp
 , 'pure_video_cropped_word_chunk_samples_file_dir_mcpwe' : pure_video_cropped_word_chunk_samples_file_dir_mcpwe, 'pure_video_cropped_sentence_chunk_samples_file_dir_mcpsh' : pure_video_cropped_sentence_chunk_samples_file_dir_mcpsh, 'pure_video_cropped_sentence_chunk_samples_file_dir_mcpse' : pure_video_cropped_sentence_chunk_samples_file_dir_mcpse, 'pure_video_cropped_sentence_chunk_samples_file_dir_acpsh' : pure_video_cropped_sentence_chunk_samples_file_dir_acpsh, 'pure_video_cropped_sentence_chunk_samples_file_dir_acpse' : pure_video_cropped_sentence_chunk_samples_file_dir_acpse}
 
 
+
 dir_name_dictionary = {'whole_files_name_dir' : whole_files_name_dir, 'chopped_files_name_dir' : chopped_files_name_dir, 'chopped_pure_audio_files_name_dir' : chopped_pure_audio_files_name_dir, 'chopped_pure_video_files_name_dir' : chopped_pure_video_files_name_dir, 'chopped_cropped_pure_video_files_name_dir' : chopped_cropped_pure_video_files_name_dir}
 
 variable_names_dataframe = pd.DataFrame(dir_name_dictionary) 
+
+
+# add a keu
+# if 'c' not in d.keys():
+#     d['c'] = 300
 
 
 # list input video file names
@@ -560,6 +649,11 @@ list_chopped_cropped_pure_video_files_name =list(chopped_cropped_pure_video_file
 
 # list input audio file names
 list_chopped_pure_audio_files_name = list(chopped_pure_audio_files_name_dir.values())
+
+
+
+
+
 
 
 #13
@@ -574,7 +668,10 @@ for i in range(len(cropped_chunk_info_list)):
     TIME_BETWEEN_FRAMES = []
     for k in range(len(FPS_LIST)):
         FPS_PER_SAMPLE = FPS_LIST[k]
-        TIME_BETWEEN_FRAMES_PER_SAMPLE = float(1/FPS_PER_SAMPLE)
+        if FPS_PER_SAMPLE == 0:
+            TIME_BETWEEN_FRAMES_PER_SAMPLE = 0
+        else:
+            TIME_BETWEEN_FRAMES_PER_SAMPLE = float(1/FPS_PER_SAMPLE)
         TIME_BETWEEN_FRAMES.append(TIME_BETWEEN_FRAMES_PER_SAMPLE)
     OUR_SAMPLE['TIME_BETWEEN_FRAMES_IN_SECONDS'] = TIME_BETWEEN_FRAMES
 
@@ -612,13 +709,18 @@ for i in range(len(cropped_chunk_info_list)):
 cropped_chunk_info_dict = {'acpwe' : cropped_chunk_info_list[0], 'mcpwe': cropped_chunk_info_list[1], 'acpse':cropped_chunk_info_list[2], 'acpsh':cropped_chunk_info_list[3], 'mcpse':cropped_chunk_info_list[4], 'mcpsh':cropped_chunk_info_list[5]}
 
 
+
+
+
+
+
 # save results
 # Note at the moment there is some information lost in the saved file as we a saving a dict variable which consists of multiple other lists and dataframes
 module_save_variables.save_pandas_dict_results(VAR_INPUT = cropped_chunk_info_dict, FILE_NAME = FOLDER_PATH + '/cropped_chunks_info_dict', CSV=True, TXT=True)
 
-# Future work Potentialy the user may descide to chop the whole video and delete all samples which fall bellow the stated threashold of LIST_RATIO_OF_DETECTED_FACES_PER_FRAME 
+# Potentialy the user may descide to chop the whole video and delete all samples which fall bellow the stated threashold of LIST_RATIO_OF_DETECTED_FACES_PER_FRAME 
 
-# Future work 12 add the functionality which automaticaly deletes any video which there isn't a face detected in less than 90% of the frames
+#12 add the functionality which automaticaly deletes any video which there isn't a face detected in less than 90% of the frames
 
 
 
@@ -657,8 +759,9 @@ del stop_index_acpwe
 del stop_index_mcpse
 del stop_index_mcpsh
 del stop_index_mcpwe
-
+del LANDMARK_DATAFRAME_array
+del LENGTH_OF_LANDMARK_DATAFRAME_array
 
 ### END ###
 
-# In the future the it will be desired to clean a bit the code and apply allignment of between subtitles - audio and audio - video. 
+
