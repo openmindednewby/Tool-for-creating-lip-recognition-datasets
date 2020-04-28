@@ -27,7 +27,7 @@ def maximum_time_of_vid(ATPSE, MTPSE, AUTO = True, MAN = False):
         print('Please specify either ATUO or MAN as True and the other as False')
         return None
     elif (type(ATPSE) == type(None) and type(MTPSE) == type(None)):
-        print('Either ATPSE or MTPSE must be != to Nonetype')
+        print('Either ATPSE/ATPSH or MTPSE/MTPSH must be != to Nonetype')
         return None
     elif (type(ATPSE) != type(None) and AUTO == True):
             temp_var = ATPSE[len(ATPSE) - 1]

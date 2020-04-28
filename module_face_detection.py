@@ -1,5 +1,5 @@
 # This function is used to record a video, apply face detection onto it, extract the usefull bit and save it
-def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', DISPLAY_WHOLE = True, DISPLAY_CHROPPED = True, OUTPUT_FILE_NAME = 'camera_recording', ADD_STR_CROPPED_FILE_NAME = '_cropped', OUTPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 105, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 10, NUMBER_OF_CAMERA_OR_VIDEO_DIR = 0, ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, FUTURE_KILL_SWITCH = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, ENABLE_CUBIC_LAND_MARK_TRACKING = True, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1,  SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68):
+def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', DISPLAY_WHOLE = True, DISPLAY_CHROPPED = True, OUTPUT_FILE_NAME = 'camera_recording', ADD_STR_CROPPED_FILE_NAME = '_cropped', OUTPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 105, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 10, NUMBER_OF_CAMERA_OR_VIDEO_DIR = 0, ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, FUTURE_KILL_SWITCH = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, ENABLE_CUBIC_LAND_MARK_TRACKING = True, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1,  SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68):
     import cv2
     import numpy as np
     import dlib
@@ -122,8 +122,8 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
         except:
             print('could unable to load shape_predictor_68_face_landmarks.dat')
     
-    XLAND_MARK = [None]*SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS
-    YLAND_MARK = [None]*SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS
+    XLAND_MARK = [None]*(int(SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP) -int(SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START))
+    YLAND_MARK = [None]*(int(SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP) -int(SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START))
     
     cap = cv2.VideoCapture(NUMBER_OF_CAMERA_OR_VIDEO_DIR) # select camera to capture frames
     
@@ -210,7 +210,7 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
           elif int(len(faces)) > 1:
               LIST_FACE_DETECTION_RESULT_PER_FRAME.append(str(len(faces)) + ' faces_found')
           else:
-              LIST_FACE_DETECTION_RESULT_PER_FRAME.append(['Error'])
+              LIST_FACE_DETECTION_RESULT_PER_FRAME.append('Error')
               print('something has gone wrong len(faces) is neither 0 or greater')
           for face in faces:
                 
@@ -292,18 +292,18 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
                       
                   if (DISPLAY_FACE_LANDMARKS ==True and CAPTURE_FACE_LANDMARKS == True):
                       # extract the landmark coordinates for the points
-                      for i in range(0, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS):
-                          XLAND_MARK[i] = landmarks.part(i).x
-                          YLAND_MARK[i] = landmarks.part(i).y        
-                          cv2.circle(frame, (XLAND_MARK[i],YLAND_MARK[i]), 1, (255, 255, 0), -1)
+                      for i in range(SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP):
+                          XLAND_MARK[i-SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START] = landmarks.part(i).x
+                          YLAND_MARK[i-SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START] = landmarks.part(i).y        
+                          cv2.circle(frame, (XLAND_MARK[i-SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START],YLAND_MARK[i-SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START]), 1, (255, 255, 0), -1)
                       # list of landmark points for x and y
                       LIST_SINGLE_FRAME_LANDMARK_RESULT = [XLAND_MARK[:],YLAND_MARK[:]]
                       LIST_LANDMARK_RESULT_PER_INPUT.append(LIST_SINGLE_FRAME_LANDMARK_RESULT)     
                   elif (DISPLAY_FACE_LANDMARKS ==False and CAPTURE_FACE_LANDMARKS == True):
                       # extract the landmark coordinates for the points
-                      for i in range(0, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS):
-                          XLAND_MARK[i] = landmarks.part(i).x
-                          YLAND_MARK[i] = landmarks.part(i).y    
+                      for i in range(SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP):
+                          XLAND_MARK[i-SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START] = landmarks.part(i).x
+                          YLAND_MARK[i-SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START] = landmarks.part(i).y    
                       # list of landmark points for x and y
                       LIST_SINGLE_FRAME_LANDMARK_RESULT = [XLAND_MARK[:],YLAND_MARK[:]]
                       LIST_LANDMARK_RESULT_PER_INPUT.append(LIST_SINGLE_FRAME_LANDMARK_RESULT)
@@ -581,7 +581,7 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
           elif len(LIST_FRAME_INDEX) == (len(LIST_LANDMARK_RESULT_PER_INPUT) + 1):
                 LIST_LANDMARK_RESULT_PER_INPUT.append(None)
           else:
-              print('something has gone wrong, LIST_LANDMARK_RESULT_PER_INPUT is neither equal or smaller by 1 ')
+              print('Warning, len(LIST_LANDMARK_RESULT_PER_INPUT) is neither equal or smaller by 1. This could be due to the fact that multiple faces are found in at least 1 frame withing the chunk sample. The number of faces detected on frame with index FRAME_INDEX = ' + str(FRAME_INDEX) +' is len(faces) = ' + str(len(faces)))
               pass
 
           if cv2.waitKey(1) & 0xFF == ord('q') or FUTURE_KILL_SWITCH == True or cap.isOpened() == False:
@@ -626,8 +626,35 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
         NUMBER_OF_FRAMES_FACE_IS_DETECTED = LIST_FACE_DETECTION_RESULT_PER_FRAME.count(True)    
         RATIO_OF_DETECTED_FACES_PER_FRAME = float(NUMBER_OF_FRAMES_FACE_IS_DETECTED/NUMBER_OF_FRAMES)
     
-    #FACE_DETECTION_RESULT = pd.DataFrame(dict) 
+
+    # ensures that the lists are of the same length
+    while (len(LIST_FRAME_INDEX) != len(LIST_LANDMARK_RESULT_PER_INPUT) or len(LIST_FRAME_INDEX) != len(LIST_FACE_DETECTION_RESULT_PER_FRAME)  or len(LIST_LANDMARK_RESULT_PER_INPUT) != len(LIST_FACE_DETECTION_RESULT_PER_FRAME)):
+        while len(LIST_FRAME_INDEX) > len(LIST_LANDMARK_RESULT_PER_INPUT):
+            LIST_LANDMARK_RESULT_PER_INPUT.append(None)
+            if len(LIST_FRAME_INDEX) == len(LIST_LANDMARK_RESULT_PER_INPUT):
+                break
+        while len(LIST_FRAME_INDEX) > len(LIST_FACE_DETECTION_RESULT_PER_FRAME):
+            LIST_FACE_DETECTION_RESULT_PER_FRAME.append(None)
+            if len(LIST_FRAME_INDEX) == len(LIST_FACE_DETECTION_RESULT_PER_FRAME):
+                break
+        while len(LIST_FRAME_INDEX) < len(LIST_LANDMARK_RESULT_PER_INPUT):
+            LIST_FRAME_INDEX.append(None)
+            # if desires to continue indexing uncomment in the table with the land mark points
+            # LIST_FRAME_INDEX.append(FRAME_INDEX)
+            # FRAME_INDEX = FRAME_INDEX + 1
+            if len(LIST_FRAME_INDEX) == len(LIST_LANDMARK_RESULT_PER_INPUT):
+                break
+        while len(LIST_FRAME_INDEX) < len(LIST_FACE_DETECTION_RESULT_PER_FRAME):
+            LIST_FRAME_INDEX.append(None)
+            # if desires to continue indexing uncomment
+            # LIST_FRAME_INDEX.append(FRAME_INDEX)
+            # FRAME_INDEX = FRAME_INDEX + 1
+            if len(LIST_FRAME_INDEX) == len(LIST_FACE_DETECTION_RESULT_PER_FRAME):
+                break
+    
+        
     dict = {'Frame Index': LIST_FRAME_INDEX, 'LIST_FACE_DETECTION_RESULT_PER_FRAME': LIST_FACE_DETECTION_RESULT_PER_FRAME, 'X-Y Land Mark Coordinates': LIST_LANDMARK_RESULT_PER_INPUT}
+    
     LANDMARK_TRACKING_RESULT = pd.DataFrame(dict) 
     
     #CSV_RESULT_RECORD = FACE_DETECTION_RESULT
@@ -643,7 +670,7 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
     return CROPPED_VIDEO_FILENAME, RATIO_OF_DETECTED_FACES_PER_FRAME, NUMBER_OF_FRAMES, LANDMARK_TRACKING_RESULT, MEASURED_RECORDING_PROCESSING_TIME, MEASURED_FPS, INPUT_VID_FPS
 
 
-def multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME, LIST_OF_INPUT_FILE_NAME, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = True, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = 68):
+def multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME, LIST_OF_INPUT_FILE_NAME, FOURCC1='M', FOURCC2='J', FOURCC3='P',FOURCC4 ='G', ADD_STR_CROPPED_FILE_NAME = '_cropped', INPUT_FILE_NAME_EXTENSION = '.mkv', OUPUT_FILE_NAME_EXTENSION = '.avi', CROPPED_WIDTH = 110, CROPPED_HEIGHT = 105, SHIFT_RIGHT = -50, SHIFT_DOWN = 0, OUTPUT_FPS = 24,  ENABLE_FACE_RECOGNITION_TRACKING_CROPING = True, WHOLE_FACE_PROFILE = False, LIPS_PROFILE = False, LOAD_FACE_LANDMARKS = True, POINT_LAND_MARK_TRACKING = False, LAND_MARK_TRACKING_NUMBER = 1, LAND_MARK_LIP_TRACKING = True, CAPTURE_FACE_LANDMARKS = True, DISPLAY_FACE_LANDMARKS = False, SAVE_LANDMARK_TRACKING_RESULTS = False, SAVE_LANDMARK_TRACKING_RESULTS_NAME = 'Record', SAVE_WHOLE = False, SAVE_CROPPED = True, DISPLAY_WHOLE = False, DISPLAY_CROPPED = False, FUTURE_KILL_SWITCH = False, ENABLE_CUBIC_LAND_MARK_TRACKING = True, CUBIC_LAND_MARK_POINT_TOP = 34,CUBIC_LAND_MARK_POINT_LEFT = 49, CUBIC_LAND_MARK_POINT_BOTTOM = 9, CUBIC_LAND_MARK_POINT_RIGHT = 55, FLIP = True, FLIP_ARGUMENT = 1 , SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = 48, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = 68):
     
   
     #MKV for video (with subtitles and audio), .MK3D for stereoscopic video, .MKA for audio-only files, and .MKS for subtitles only
@@ -666,7 +693,10 @@ def multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME, LIST_OF_IN
     shift_down = SHIFT_DOWN
     output_fps = OUTPUT_FPS
     
-    shape_predictor_number_of_landmark_points = SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS
+    shape_predictor_number_of_landmark_point_start = SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START
+    
+    shape_predictor_number_of_landmark_point_stop = SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP
+    
     enable_cubic_land_mark_tracking = ENABLE_CUBIC_LAND_MARK_TRACKING
     cubic_land_mark_point_top = CUBIC_LAND_MARK_POINT_TOP
     cubic_land_mark_point_left = CUBIC_LAND_MARK_POINT_LEFT
@@ -712,7 +742,7 @@ def multiple_file_camera_face_rec_and_cropping(LIST_OUTPUT_FILE_NAME, LIST_OF_IN
         output_file_name = output_file_name.replace(input_file_name_extension, '')
 
 
-        cropped_video_filename, ratio_of_detected_faces_per_frame, number_of_frames, landmark_tracking_result, measured_recording_processing_time, measured_fps, input_vid_fps = camera_face_rec_and_cropping(SAVE_WHOLE = save_whole, SAVE_CROPPED = save_cropped, DISPLAY_WHOLE = display_whole, FOURCC1=fourcc1, FOURCC2=fourcc2, FOURCC3=fourcc3, FOURCC4=fourcc4, DISPLAY_CHROPPED = display_cropped, OUTPUT_FILE_NAME = output_file_name, ADD_STR_CROPPED_FILE_NAME = add_str_cropped_file_name, OUTPUT_FILE_NAME_EXTENSION = output_file_name_extension, CROPPED_WIDTH = cropped_width, CROPPED_HEIGHT = cropped_height, SHIFT_RIGHT = shift_right, SHIFT_DOWN = shift_down, OUTPUT_FPS = output_fps, NUMBER_OF_CAMERA_OR_VIDEO_DIR = number_of_camera, ENABLE_FACE_RECOGNITION_TRACKING_CROPING = enable_face_recognition_tracking_croping, WHOLE_FACE_PROFILE = whole_face_profile, LIPS_PROFILE = lips_profile, FUTURE_KILL_SWITCH = future_kill_switch, LOAD_FACE_LANDMARKS = load_face_landmarks, POINT_LAND_MARK_TRACKING = point_land_mark_tracking, LAND_MARK_TRACKING_NUMBER = land_mark_tracking_number, LAND_MARK_LIP_TRACKING = land_mark_lip_tracking, CAPTURE_FACE_LANDMARKS = capture_face_landmarks, DISPLAY_FACE_LANDMARKS = display_face_landmarks, SAVE_LANDMARK_TRACKING_RESULTS = save_landmark_tracking_results, SAVE_LANDMARK_TRACKING_RESULTS_NAME = save_record_file_name, ENABLE_CUBIC_LAND_MARK_TRACKING = enable_cubic_land_mark_tracking, CUBIC_LAND_MARK_POINT_TOP = cubic_land_mark_point_top, CUBIC_LAND_MARK_POINT_LEFT = cubic_land_mark_point_left, CUBIC_LAND_MARK_POINT_BOTTOM = cubic_land_mark_point_bottom, CUBIC_LAND_MARK_POINT_RIGHT = cubic_land_mark_point_right, FLIP = flip, FLIP_ARGUMENT = flip_argument, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINTS = shape_predictor_number_of_landmark_points)
+        cropped_video_filename, ratio_of_detected_faces_per_frame, number_of_frames, landmark_tracking_result, measured_recording_processing_time, measured_fps, input_vid_fps = camera_face_rec_and_cropping(SAVE_WHOLE = save_whole, SAVE_CROPPED = save_cropped, DISPLAY_WHOLE = display_whole, FOURCC1=fourcc1, FOURCC2=fourcc2, FOURCC3=fourcc3, FOURCC4=fourcc4, DISPLAY_CHROPPED = display_cropped, OUTPUT_FILE_NAME = output_file_name, ADD_STR_CROPPED_FILE_NAME = add_str_cropped_file_name, OUTPUT_FILE_NAME_EXTENSION = output_file_name_extension, CROPPED_WIDTH = cropped_width, CROPPED_HEIGHT = cropped_height, SHIFT_RIGHT = shift_right, SHIFT_DOWN = shift_down, OUTPUT_FPS = output_fps, NUMBER_OF_CAMERA_OR_VIDEO_DIR = number_of_camera, ENABLE_FACE_RECOGNITION_TRACKING_CROPING = enable_face_recognition_tracking_croping, WHOLE_FACE_PROFILE = whole_face_profile, LIPS_PROFILE = lips_profile, FUTURE_KILL_SWITCH = future_kill_switch, LOAD_FACE_LANDMARKS = load_face_landmarks, POINT_LAND_MARK_TRACKING = point_land_mark_tracking, LAND_MARK_TRACKING_NUMBER = land_mark_tracking_number, LAND_MARK_LIP_TRACKING = land_mark_lip_tracking, CAPTURE_FACE_LANDMARKS = capture_face_landmarks, DISPLAY_FACE_LANDMARKS = display_face_landmarks, SAVE_LANDMARK_TRACKING_RESULTS = save_landmark_tracking_results, SAVE_LANDMARK_TRACKING_RESULTS_NAME = save_record_file_name, ENABLE_CUBIC_LAND_MARK_TRACKING = enable_cubic_land_mark_tracking, CUBIC_LAND_MARK_POINT_TOP = cubic_land_mark_point_top, CUBIC_LAND_MARK_POINT_LEFT = cubic_land_mark_point_left, CUBIC_LAND_MARK_POINT_BOTTOM = cubic_land_mark_point_bottom, CUBIC_LAND_MARK_POINT_RIGHT = cubic_land_mark_point_right, FLIP = flip, FLIP_ARGUMENT = flip_argument, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_START = shape_predictor_number_of_landmark_point_start, SHAPE_PREDICTOR_NUMBER_OF_LANDMARK_POINT_STOP = shape_predictor_number_of_landmark_point_stop)
 
         
         LIST_CROPPED_VIDEO_FILENAME.append(cropped_video_filename)
