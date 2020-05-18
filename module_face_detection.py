@@ -138,6 +138,11 @@ def camera_face_rec_and_cropping(SAVE_WHOLE = False, SAVE_CROPPED = False, FOURC
     # supposed to get the fps however as we add more features the fps drops and it is thuse inacurate. For some reason the actial value extracted from the camera is 30 however in practice we get just 15
     INPUT_VID_FPS = cap.get(5)
     
+    if OUTPUT_FPS=='same':
+        OUTPUT_FPS = cap.get(5)
+    else:
+        pass
+    
     '''
     # more info at https://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html
     NUMBER_OF_FRAMES_IN_VIDEO = cap.get(7)

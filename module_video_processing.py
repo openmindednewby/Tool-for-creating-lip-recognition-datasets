@@ -24,8 +24,15 @@ def maximum_time_of_vid(ATPSE, MTPSE, AUTO = True, MAN = False):
     
     # get the maximum time/length of the video
     if (AUTO == True and MAN == True):
-        print('Please specify either ATUO or MAN as True and the other as False')
-        return None
+        try:
+            temp_var = ATPSE[len(ATPSE) - 1]
+            max_time = temp_var[-12:]
+            max_time = max_time.replace(':', '')#remove ':'
+            max_time = max_time.replace('.', '')#remove ':'
+            return max_time
+        except:
+            print('Please specify either ATUO or MAN as True and the other as False')
+            return None
     elif (type(ATPSE) == type(None) and type(MTPSE) == type(None)):
         print('Either ATPSE/ATPSH or MTPSE/MTPSH must be != to Nonetype')
         return None
