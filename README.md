@@ -1,8 +1,21 @@
 # Tool-for-creating-lip-recognition-datasets
-The following python code is the first step to creating an open source tool which will be used to create datasets that could be used to train lip recognition machine learning algorithms. The program typical takes a given video URL (typically from youtube) and downloads the video along with the available English subtitles. It then chops the video into segments per word or per sentence depending on the what settings are specified. Once the videos are chopped per sentence or per-word the audio is extracted and stored into a separate chunks and the files are copied without the audio and stored separately. Afterwards face recognition is applied onto the video files that do not contain the audio. The 68 landmark points position are extracted for every frame, face recognition is applied on every frame and the result is True if a face is found False is a face isn't found. If a face is found the region of the lips is cropped. All of the results are saved locally. No subtitle to audio or audio to video alignment is applied at the moment. The video is chopped at the times in which subtitles are presented in the video. Simply open and run main.py by changing the URL and filename value. Also a DEMO_face_detect.py presents how face recognition is applied in real time from the local camera. I appologies in advance there are alot of improvements that need to be made. I am not a software engineer neither I hold a computer science degree at the moment but I am get there. I will be writting a paper about this repo and maybe a video explaining how the functions work. The code was tested to work on Ubuntu 19.4 and anaconda python 3.7.7. An IDE such as spyder is recommended as it displays the variables values.
+This program is an open source tool which will culd be used to create datasets suitable train lip recognition machine learning algorithms. All of the results are saved locally. No subtitle to audio or audio to video alignment is applied at the moment. The video is chopped at the times in which subtitles are presented in the video. Simply open and run main.py by changing the URL and filename value. Also a DEMO_face_detect.py presents how face recognition is applied in real time from the local camera. There are alot of improvements that need to be made.
+
+The code was tested to work on Ubuntu 19.4 and anaconda python 3.7.7. An IDE such as spyder is recommended as it displays the variables values.
+
 
 Note: In order for the code to run download the shape_predictor_68_face_landmarks.dat file from here https://github.com/AKSHAYUBHAT/TensorFace/blob/master/openface/models/dlib/ and place it in the same folder with main.py and the rest of the scripts. Make sure the name is exactly 'shape_predictor_68_face_landmarks.dat'.
 
-Simply open main.py and run it to for an example result. Make sure you are connected to the internet. You will need ffmpeg and youtube-dl installed.
+
+Simply open main.py and run it to for an example result.
+Make sure you are connected to the internet.
+You will need ffmpeg and youtube-dl installed.
+Just specify the URL and a name.
+
+The code was tested on Ubuntu 19.04 and python 3.7.7 in the anaconda environment.
 
 For a realtime demo of face detection and cropping open DEMO_face_detect.py, uncomment some example code in the file and run it.
+
+For more information please read the pdf file 'Demetrios Loizides Final Year Project.pdf' or see the video demonstration I have made from here https://drive.google.com/file/d/1pw_bmya_RYbQ8jZJynZV7JgTkbRnmK-O/view?usp=sharing.
+
+Thank you.
