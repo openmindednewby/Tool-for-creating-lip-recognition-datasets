@@ -19,9 +19,11 @@ Just specify the URL and a name.
 
 For a realtime demo of face detection and cropping open DEMO_face_detect.py, uncomment some example code in the file and run it.
 
+Please make sure that youtube-dl is installed and up to date.
+
 
 ## For more information and list of Options
 
-Please read the pdf file 'Demetrios Loizides Final Year Project.pdf' or see the video demonstration I have made from here https://drive.google.com/file/d/1pw_bmya_RYbQ8jZJynZV7JgTkbRnmK-O/view?usp=sharing.
+Please read the pdf file 'Demetrios Loizides Final Year Project.pdf' or see the video demonstration I have made here https://drive.google.com/file/d/1pw_bmya_RYbQ8jZJynZV7JgTkbRnmK-O/view?usp=sharing.
 
 Thank you.
